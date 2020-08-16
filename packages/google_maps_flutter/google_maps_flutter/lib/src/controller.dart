@@ -68,6 +68,9 @@ class GoogleMapController {
           .onCameraIdle(mapId: mapId)
           .listen((_) => _googleMapState.widget.onCameraIdle());
     }
+    _googleMapsFlutterPlatform.onGroundOverlayTap(mapId: mapId).listen(
+        (GroundOverlayTapEvent e) =>
+            _googleMapState.onGroundOverlayTap(e.value));
     _googleMapsFlutterPlatform
         .onMarkerTap(mapId: mapId)
         .listen((MarkerTapEvent e) => _googleMapState.onMarkerTap(e.value));
@@ -149,6 +152,19 @@ class GoogleMapController {
   Future<void> _updateCircles(CircleUpdates circleUpdates) {
     assert(circleUpdates != null);
     return _googleMapsFlutterPlatform.updateCircles(circleUpdates,
+        mapId: mapId);
+  }
+
+  /// Updates ground overlay configuration.
+  ///
+  /// Change listeners are notified once the update has been made on the
+  /// platform side.
+  ///
+  /// The returned [Future] completes after listeners have been notified.
+  Future<void> _updateGroundOverlays(
+      GroundOverlayUpdates groundOverlayUpdates) {
+    assert(groundOverlayUpdates != null);
+    return _googleMapsFlutterPlatform.updateGroundOverlays(groundOverlayUpdates,
         mapId: mapId);
   }
 

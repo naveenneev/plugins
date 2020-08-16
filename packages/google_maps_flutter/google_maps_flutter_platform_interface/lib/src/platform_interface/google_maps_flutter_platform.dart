@@ -5,14 +5,14 @@
 import 'dart:async';
 import 'dart:typed_data';
 
-import 'package:flutter/widgets.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
-
-import 'package:google_maps_flutter_platform_interface/src/method_channel/method_channel_google_maps_flutter.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter/widgets.dart';
 import 'package:google_maps_flutter_platform_interface/google_maps_flutter_platform_interface.dart';
+import 'package:google_maps_flutter_platform_interface/src/method_channel/method_channel_google_maps_flutter.dart';
+import 'package:google_maps_flutter_platform_interface/src/types/ground_overlay_updates.dart';
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 
 /// The interface that platform-specific implementations of `google_maps_flutter` must extend.
@@ -100,6 +100,14 @@ abstract class GoogleMapsFlutterPlatform extends PlatformInterface {
     @required int mapId,
   }) {
     throw UnimplementedError('updatePolylines() has not been implemented.');
+  }
+
+  Future<void> updateGroundOverlays(
+    GroundOverlayUpdates groundOverlayUpdates, {
+    @required int mapId,
+  }) {
+    throw UnimplementedError(
+        'updateGroundOverlays() has not been implemented.');
   }
 
   /// Updates circle configuration.
@@ -267,6 +275,10 @@ abstract class GoogleMapsFlutterPlatform extends PlatformInterface {
   /// A [Marker] has been tapped.
   Stream<MarkerTapEvent> onMarkerTap({@required int mapId}) {
     throw UnimplementedError('onMarkerTap() has not been implemented.');
+  }
+
+  Stream<GroundOverlayTapEvent> onGroundOverlayTap({@required int mapId}) {
+    throw UnimplementedError('onGroundOverlayTap() has not been implemented.');
   }
 
   /// An [InfoWindow] has been tapped.

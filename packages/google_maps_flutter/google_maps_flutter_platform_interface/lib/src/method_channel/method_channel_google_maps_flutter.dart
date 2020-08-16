@@ -11,6 +11,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter/gestures.dart';
 
 import 'package:google_maps_flutter_platform_interface/google_maps_flutter_platform_interface.dart';
+import 'package:google_maps_flutter_platform_interface/src/types/ground_overlay.dart';
+import 'package:google_maps_flutter_platform_interface/src/types/ground_overlay_updates.dart';
 import 'package:stream_transform/stream_transform.dart';
 
 /// An implementation of [GoogleMapsFlutterPlatform] that uses [MethodChannel] to communicate with the native code.
@@ -107,6 +109,11 @@ class MethodChannelGoogleMapsFlutter extends GoogleMapsFlutterPlatform {
   }
 
   @override
+  Stream<GroundOverlayTapEvent> onGroundOverlayTap({@required int mapId}) {
+    return _events(mapId).whereType<GroundOverlayTapEvent>();
+  }
+
+  @override
   Stream<CircleTapEvent> onCircleTap({@required int mapId}) {
     return _events(mapId).whereType<CircleTapEvent>();
   }
@@ -164,6 +171,12 @@ class MethodChannelGoogleMapsFlutter extends GoogleMapsFlutterPlatform {
         _mapEventStreamController.add(PolygonTapEvent(
           mapId,
           PolygonId(call.arguments['polygonId']),
+        ));
+        break;
+      case 'groundOverlay#onTap':
+        _mapEventStreamController.add(GroundOverlayTapEvent(
+          mapId,
+          GroundOverlayId(call.arguments['groundOverlayId']),
         ));
         break;
       case 'circle#onTap':
@@ -224,6 +237,19 @@ class MethodChannelGoogleMapsFlutter extends GoogleMapsFlutterPlatform {
     return channel(mapId).invokeMethod<void>(
       'markers#update',
       markerUpdates.toJson(),
+    );
+  }
+
+  @override
+  Future<void> updateGroundOverlays(
+    GroundOverlayUpdates groundOverlayUpdates, {
+    @required int mapId,
+  }) {
+    assert(groundOverlayUpdates != null);
+    print("LOG: " + groundOverlayUpdates.toJson().toString());
+    return channel(mapId).invokeMethod<void>(
+      'groundOverlays#update',
+      groundOverlayUpdates.toJson(),
     );
   }
 

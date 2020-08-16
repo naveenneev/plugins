@@ -54,6 +54,7 @@ class GoogleMap extends StatefulWidget {
     this.onCameraIdle,
     this.onTap,
     this.onLongPress,
+    this.groundOverlays,
   })  : assert(initialCameraPosition != null),
         super(key: key);
 
@@ -116,6 +117,8 @@ class GoogleMap extends StatefulWidget {
 
   /// Polylines to be placed on the map.
   final Set<Polyline> polylines;
+
+  final Set<GroundOverlay> groundOverlays;
 
   /// Circles to be placed on the map.
   final Set<Circle> circles;
@@ -219,6 +222,8 @@ class _GoogleMapState extends State<GoogleMap> {
   Map<MarkerId, Marker> _markers = <MarkerId, Marker>{};
   Map<PolygonId, Polygon> _polygons = <PolygonId, Polygon>{};
   Map<PolylineId, Polyline> _polylines = <PolylineId, Polyline>{};
+  Map<GroundOverlayId, GroundOverlay> _groundOverlays =
+      <GroundOverlayId, GroundOverlay>{};
   Map<CircleId, Circle> _circles = <CircleId, Circle>{};
   _GoogleMapOptions _googleMapOptions;
 
@@ -231,6 +236,7 @@ class _GoogleMapState extends State<GoogleMap> {
       'polygonsToAdd': serializePolygonSet(widget.polygons),
       'polylinesToAdd': serializePolylineSet(widget.polylines),
       'circlesToAdd': serializeCircleSet(widget.circles),
+      'groundOverlaysToAdd': serializeGroundOverlaySet(widget.groundOverlays),
       '_webOnlyMapCreationId': _webOnlyMapCreationId,
     };
 
@@ -266,6 +272,7 @@ class _GoogleMapState extends State<GoogleMap> {
     _updatePolygons();
     _updatePolylines();
     _updateCircles();
+    _updateGroundOverlays();
   }
 
   void _updateOptions() async {
@@ -305,6 +312,14 @@ class _GoogleMapState extends State<GoogleMap> {
     _polylines = keyByPolylineId(widget.polylines);
   }
 
+  void _updateGroundOverlays() async {
+    final GoogleMapController controller = await _controller.future;
+    // ignore: unawaited_futures
+    controller._updateGroundOverlays(GroundOverlayUpdates.from(
+        _groundOverlays.values.toSet(), widget.groundOverlays));
+    _groundOverlays = keyByGroundOverlayId(widget.groundOverlays);
+  }
+
   void _updateCircles() async {
     final GoogleMapController controller = await _controller.future;
     // ignore: unawaited_futures
@@ -329,6 +344,13 @@ class _GoogleMapState extends State<GoogleMap> {
     assert(markerId != null);
     if (_markers[markerId]?.onTap != null) {
       _markers[markerId].onTap();
+    }
+  }
+
+  void onGroundOverlayTap(GroundOverlayId groundOverlayId) {
+    assert(groundOverlayId != null);
+    if (_groundOverlays[groundOverlayId]?.onTap != null) {
+      _groundOverlays[groundOverlayId].onTap();
     }
   }
 

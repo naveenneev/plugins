@@ -4,6 +4,7 @@
 
 import 'package:google_maps_flutter_platform_interface/google_maps_flutter_platform_interface.dart';
 import 'package:google_maps_flutter_platform_interface/src/method_channel/method_channel_google_maps_flutter.dart';
+import 'package:google_maps_flutter_platform_interface/src/types/ground_overlay.dart';
 
 /// Generic Event coming from the native side of Maps.
 ///
@@ -134,6 +135,14 @@ class CircleTapEvent extends MapEvent<CircleId> {
   ///
   /// The `value` of this event is a [CircleId] object that represents the tapped Circle.
   CircleTapEvent(int mapId, CircleId circleId) : super(mapId, circleId);
+}
+
+/// An event fired when a [GroundOverlay] is tapped.
+class GroundOverlayTapEvent extends MapEvent<GroundOverlayId> {
+  /// Build an GroundOverlayTapEvent Event triggered from the map represented by `mapId`.
+  ///
+  /// The `value` of this event is a [GroundOverlayId] object that represents the tapped GroundOverlay.
+  GroundOverlayTapEvent(int mapId, GroundOverlayId groundOverlayId) : super(mapId, groundOverlayId);
 }
 
 /// An event fired when a Map is tapped.

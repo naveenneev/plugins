@@ -13,7 +13,6 @@ import 'package:flutter/services.dart' show AssetBundle;
 
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/widgets.dart';
-import 'package:network_image_to_byte/network_image_to_byte.dart';
 
 /// Defines a bitmap image. For a marker, this class can be used to set the
 /// image of the marker icon. For a ground overlay, it can be used to set the

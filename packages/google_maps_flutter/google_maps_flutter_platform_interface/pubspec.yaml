@@ -11,6 +11,7 @@ dependencies:
   meta: ^1.0.5
   plugin_platform_interface: ^1.0.1
   stream_transform: ^1.2.0
+  network_image_to_byte: ^0.0.1
 
 dev_dependencies:
   flutter_test:

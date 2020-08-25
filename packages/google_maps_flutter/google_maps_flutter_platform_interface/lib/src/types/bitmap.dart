@@ -120,12 +120,6 @@ class BitmapDescriptor {
     return BitmapDescriptor._(<dynamic>['fromBytes', byteData]);
   }
 
-  /// Creates a BitmapDescriptor using an array of bytes that must be encoded
-  /// as PNG.
-  static Future<BitmapDescriptor> fromBytesAndUrl(String url) async {
-    return fromBytes(await networkImageToByte(url));
-  }
-
   final dynamic _json;
 
   /// Convert the object to a Json format.

@@ -4,12 +4,15 @@
 
 import 'dart:async' show Future;
 import 'dart:typed_data' show Uint8List;
+import 'dart:ui';
 
 import 'package:flutter/material.dart'
     show ImageConfiguration, AssetImage, AssetBundleImageKey;
+import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart' show AssetBundle;
 
 import 'package:flutter/foundation.dart' show kIsWeb;
+import 'package:flutter/widgets.dart';
 
 /// Defines a bitmap image. For a marker, this class can be used to set the
 /// image of the marker icon. For a ground overlay, it can be used to set the
@@ -114,6 +117,20 @@ class BitmapDescriptor {
   /// as PNG.
   static BitmapDescriptor fromBytes(Uint8List byteData) {
     return BitmapDescriptor._(<dynamic>['fromBytes', byteData]);
+  }
+
+  static BitmapDescriptor fromBytesAndUrl(String url, BuildContext context) {
+    Uint8List bytes;
+    final DecoderCallback callback = (Uint8List bytes, {int cacheWidth, int cacheHeight}) {
+      bytes = bytes.buffer.asUint8List();
+      return instantiateImageCodec(bytes, targetWidth: cacheWidth, targetHeight: cacheHeight);
+    };
+    ImageProvider provider = NetworkImage(url);
+    provider.obtainKey(createLocalImageConfiguration(context)).then((key) {
+      provider.load(key, callback);
+    });
+
+    return fromBytes(bytes);
   }
 
   final dynamic _json;

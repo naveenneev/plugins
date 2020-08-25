@@ -244,6 +244,7 @@ class Convert {
 
   private static Bitmap toBitmap(Object o) {
     byte[] bmpData = (byte[]) o;
+    Log.e("CONVERT BITMAP", "HERE" + Arrays.toString(bmpData));
     Bitmap bitmap = BitmapFactory.decodeByteArray(bmpData, 0, bmpData.length);
     if (bitmap == null) {
       throw new IllegalArgumentException("Unable to decode bytes as a valid bitmap.");

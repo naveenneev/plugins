@@ -246,7 +246,6 @@ class MethodChannelGoogleMapsFlutter extends GoogleMapsFlutterPlatform {
     @required int mapId,
   }) {
     assert(groundOverlayUpdates != null);
-    print("LOG: " + groundOverlayUpdates.toJson().toString());
     return channel(mapId).invokeMethod<void>(
       'groundOverlays#update',
       groundOverlayUpdates.toJson(),

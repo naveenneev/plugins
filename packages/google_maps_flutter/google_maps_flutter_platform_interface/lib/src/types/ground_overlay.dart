@@ -51,6 +51,8 @@ class GroundOverlay {
       this.visible = true,
       this.bitmapDescriptor,
       this.bounds,
+        this.northeast,
+        this.southwest,
       this.width,
       this.height,
       this.bearing,
@@ -86,6 +88,10 @@ class GroundOverlay {
 
   /// Geographical location of the center of the ground overlay.
   final LatLng location;
+
+  /// Following NorthEast and SouthWest coordinates are to create bounds for the overlay
+  final LatLng northeast;
+  final LatLng southwest;
 
   /// True if the ground overlay is visible.
   final bool visible;
@@ -172,6 +178,8 @@ class GroundOverlay {
     addIfPresent('transparency', transparency);
     addIfPresent('bearing', bearing);
     addIfPresent('visible', visible);
+    addIfPresent('northeast', northeast.toJson());
+    addIfPresent('southwest', southwest.toJson());
     addIfPresent('zIndex', zIndex);
     addIfPresent('height', height);
     addIfPresent('anchor', _offsetToJson(anchor));

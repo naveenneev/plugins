@@ -133,20 +133,19 @@ static UIImage* ExtractIcon(NSObject<FlutterPluginRegistrar>* registrar, NSArray
 {
     NSLog(@"The data we have for Overlay = %@",data);
     
-    NSArray *sw = data[@"southwest"];
-    NSArray *ne = data[@"northeast"];
-    NSArray *loc = data[@"location"];
-    if (sw && ne)
+    NSArray *bounds = data[@"bounds"];
+    
+    if (bounds)
     {
+        NSArray *sw = bounds[0];
+        NSArray *ne = bounds[1];
+        
         CLLocationCoordinate2D swc = ToLocation(sw);
         CLLocationCoordinate2D nec = ToLocation(ne);
         
-        CLLocationCoordinate2D location = ToLocation(loc);
-        
-        
         GMSCoordinateBounds *overlayBounds = [[GMSCoordinateBounds alloc]initWithCoordinate:swc coordinate:nec];
         // Choose the midpoint of the coordinate to focus the camera on.
-        CLLocationCoordinate2D anchor = GMSGeometryInterpolate(swc, nec, 1.0);
+//        CLLocationCoordinate2D anchor = GMSGeometryInterpolate(swc, nec, 1.0);
 
         NSArray* icon = data[@"bitmap"];
         UIImage* image;
@@ -156,7 +155,6 @@ static UIImage* ExtractIcon(NSObject<FlutterPluginRegistrar>* registrar, NSArray
         }
         
         _groundOverlay = [GMSGroundOverlay groundOverlayWithBounds:overlayBounds icon:image];
-        _groundOverlay.position = location;
         _groundOverlay.map = _mapView;
 
     }

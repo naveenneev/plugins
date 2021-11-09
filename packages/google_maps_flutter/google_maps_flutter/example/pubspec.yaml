@@ -1,69 +1,37 @@
-name: google_maps_flutter_example
-description: Demonstrates how to use the google_maps_flutter plugin.
+name: google_maps_flutter
+description: A Flutter plugin for integrating Google Maps in iOS and Android applications.
+repository: https://github.com/flutter/plugins/tree/master/packages/google_maps_flutter/google_maps_flutter
+issue_tracker: https://github.com/flutter/flutter/issues?q=is%3Aissue+is%3Aopen+label%3A%22p%3A+maps%22
+version: 2.1.0
+
+environment:
+  sdk: ">=2.14.0 <3.0.0"
+  flutter: ">=2.5.0"
+
+flutter:
+  plugin:
+    platforms:
+      android:
+        package: io.flutter.plugins.googlemaps
+        pluginClass: GoogleMapsPlugin
+      ios:
+        pluginClass: FLTGoogleMapsPlugin
 
 dependencies:
   flutter:
     sdk: flutter
-
-  # The following adds the Cupertino Icons font to your application.
-  # Use with the CupertinoIcons class for iOS style icons.
-  cupertino_icons: ^0.1.0
-  google_maps_flutter:
-    path: ../
-  flutter_plugin_android_lifecycle: ^1.0.0
-
-
-version: 1.0.0+1
-
-environment:
-  sdk: ">=2.12.0 <3.0.0"
+  flutter_plugin_android_lifecycle: ^2.0.1
+  google_maps_flutter_platform_interface: ^2.1.2
 
 dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  # TODO(iskakaushik): The following dependencies can be removed once
+  # https://github.com/dart-lang/pub/issues/2101 is resolved.
   flutter_driver:
     sdk: flutter
-  test: ^1.6.0
-  e2e:
-    path: ../../../e2e
-  pedantic: ^1.8.0
-
-# For information on the generic Dart part of this file, see the
-# following page: https://www.dartlang.org/tools/pub/pubspec
-
-# The following section is specific to Flutter.
-flutter:
-
-  # The following line ensures that the Material Icons font is
-  # included with your application, so that you can use the icons in
-  # the material Icons class.
-  uses-material-design: true
-
-  # To add assets to your application, add an assets section, like this:
-  assets:
-    - assets/
-  #  - images/a_dot_ham.jpeg
-
-  # An image asset can refer to one or more resolution-specific "variants", see
-  # https://flutter.io/assets-and-images/#resolution-aware.
-
-  # For details regarding adding assets from package dependencies, see
-  # https://flutter.io/assets-and-images/#from-packages
-
-  # To add custom fonts to your application, add a fonts section here,
-  # in this "flutter" section. Each entry in this list should have a
-  # "family" key with the font family name, and a "fonts" key with a
-  # list giving the asset and other descriptors for the font. For
-  # example:
-  # fonts:
-  #   - family: Schyler
-  #     fonts:
-  #       - asset: fonts/Schyler-Regular.ttf
-  #       - asset: fonts/Schyler-Italic.ttf
-  #         style: italic
-  #   - family: Trajan Pro
-  #     fonts:
-  #       - asset: fonts/TrajanPro.ttf
-  #       - asset: fonts/TrajanPro_Bold.ttf
-  #         weight: 700
-  #
-  # For details regarding fonts from package dependencies,
-  # see https://flutter.io/custom-fonts/#from-packages
+  test: ^1.16.0
+  pedantic: ^1.10.0
+  plugin_platform_interface: ^2.0.0
+  stream_transform: ^2.0.0
